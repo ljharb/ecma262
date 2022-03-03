@@ -12,18 +12,12 @@ jobs:
     if: ${{ github.repository == 'tc39/ecma262' }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup node
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: ljharb/actions/node/install@56f291b2a0d9e3bce72634356ae949b1e054b9f8
+        name: 'nvm install lts/* && npm ci'
         with:
-          node-version: 'lts/*'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci
-
+          node-version: lts/*
+          use-npm-ci: true
       - name: Publish biblio
         run: scripts/publish-biblio.sh
         env:
